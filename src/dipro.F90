@@ -412,6 +412,7 @@ subroutine get_jab(env, tblite, mol, fragment, dipro)
            &format_string(efrag(2)*autoev, '(f10.3)')//" eV")
          call ctx%message("J(AB): "//format_string(jab*autoev, '(f20.3)')//" eV")    
          call ctx%message("S(AB): "//format_string(sab, '(f22.8)')//" Eh")
+         call ctx%message("J(AB,eff): "//format_string(jeff*autoev, '(f16.3)')//" eV")
          call ctx%message("|J(AB,eff)|: "//format_string(abs(jeff)*autoev, '(f16.3)')//" eV")
          write(*,*) "  "
 
