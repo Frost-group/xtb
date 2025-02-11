@@ -153,8 +153,9 @@ subroutine local(nat,at,nbf,nao,ihomo,xyz,z,focc,s,p,cmo,eig,q,etot,gbsa,basis,r
       qhl(1:nat,2)=0
    endif
 
-   allocate(cca(nao*nao),xcen(n),lneigh(4,n),aneigh(2,n))
-   allocate(d(n,n),ecent(n,4),eiga(n),qcent(n,3),ecent2(n,4))
+   allocate(lneigh(4,n),aneigh(2,n), source=0)
+   allocate(cca(nao*nao),xcen(n), source=0.0_wp)
+   allocate(d(n,n),ecent(n,4),eiga(n),qcent(n,3),ecent2(n,4), source=0.0_wp)
 
    ! do only occ. ones
    cca=0
@@ -494,14 +495,12 @@ subroutine local(nat,at,nbf,nao,ihomo,xyz,z,focc,s,p,cmo,eig,q,etot,gbsa,basis,r
          enddo
       enddo
       new=k
-
-      if(set%pr_local) then 
-      call close_file(iscreen)
-      end if
       deallocate(wbo)
 
-
    endif
+
+   if(set%pr_local) call close_file(iscreen)
+
    !ccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 
    !> If the normal xtb mode is used with --lmo, set%pr_local is true and
@@ -652,6 +651,7 @@ subroutine mocent(n,ndim,ihomo,x,s,qmo,xcen,aoat2)
 end subroutine mocent
 
 SUBROUTINE lmosort(ncent,ihomo,imo,imem,qmo)
+   IMPLICIT INTEGER(I-N)
    IMPLICIT REAL*8(A-H,O-Z)
    dimension qmo(ncent,ihomo)
    dimension imem(ncent)
@@ -677,6 +677,7 @@ SUBROUTINE lmosort(ncent,ihomo,imo,imem,qmo)
 end subroutine lmosort
 
 SUBROUTINE lmosort2(n,eps,d,ecent)
+   IMPLICIT INTEGER(I-N)
    IMPLICIT REAL*8(A-H,O-Z)
    dimension d(n,n), eps(n), ecent(n,3)
 
